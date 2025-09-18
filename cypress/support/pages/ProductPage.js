@@ -5,7 +5,7 @@ class ProductPage {
     }
 
      search(element) {
-        cy.get(this.priceContent)
+        cy.get(this.searchText)
           .should('be.visible')
           .contains(element)
           .should('contain.text', 'Hasta 3 cuotas sin interés');
