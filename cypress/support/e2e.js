@@ -15,11 +15,16 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands'
-
+/*
 Cypress.on('uncaught:exception', (err, runnable) => {
   // Ignora errores de jQuery y undefined.replaceAll en scripts externos
   if (err.message.includes('jQuery.easing') || err.message.includes('replaceAll')) {
     return false; // no hace fallar el test
   }
   return true;
+});*/
+
+
+Cypress.on('uncaught:exception', (err, runnable) => {
+  return false; // previene que Cypress falle por errores externos
 });

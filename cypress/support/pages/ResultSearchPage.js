@@ -1,6 +1,6 @@
 class ResultSearchPage {
     constructor() {
-        this.searchList = 'ol.products.list.items.product-items li'
+        this.searchList = 'ol[class="products list items product-items"] li';
 
     }
 

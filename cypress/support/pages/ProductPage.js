@@ -1,6 +1,6 @@
 class ProductPage {
     constructor() {
-        this.searchText = '.price-content '
+        this.searchText = '.price-content ';
 
     }
 

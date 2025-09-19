@@ -1,0 +1,7 @@
+{
+    "searchFilterOff":"div[class='block-content filter-content'] strong[class='block-subtitle filter-subtitle']",
+    "searchMemoryFilterOn" : "#filters-items div[class='filter-item memory']",
+    "searchMemoryList" :"ol[data-code='movistar_internalmemory'] li",
+    "searchPriceFilterOn" : "#filters-items > div:nth-child(2)",
+    "searchPriceList" : "ol[data-code='price'] li"
+}
