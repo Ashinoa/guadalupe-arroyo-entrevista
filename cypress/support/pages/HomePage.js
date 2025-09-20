@@ -82,6 +82,31 @@ class HomePage {
         const match = text.match(/\d+/);
         return match ? match[0] : null;
     }
+
+    countProducts() {
+        cy.fixture('dataCP002.json').then((locators) => {
+
+            cy.get('body').then(($body) => {
+                if ($body.find(locators.searchButtonMoreProducts).is(':enabled')) {
+                    cy.get(locators.searchButtonMoreProducts).should('be.enabled').click();
+                    
+                    cy.get(locators.searchContentMoreProducts).should('exist').its('length').then((count) => {
+                        cy.log(`Se encontraron ${count} equipos`);
+                        expect(count).to.be.within(0,count);
+                        return;
+                    })
+                }else{
+                    cy.get(locators.searchContentProducts).should('exist').its('length').then((count) => {
+                        cy.log(`Se encontraron ${count} equipos`);
+                        expect(count).to.be.within(0,count);
+                        return;
+                    })
+                }
+            })
+
+
+        });
+    }
 }
 
 export default new HomePage();

@@ -9,5 +9,10 @@
     "searchPriceFilterContract" : "ol.items[data-code='price']", 
     "searchParentFilterPrice" : "div.filter-item",
     "searchTitleFilterPrice" : ".filter-title",
-    "searchExpandPriceList" : "ol[data-code='price'] li"
+    "searchExpandPriceList" : "ol[data-code='price'] li",
+
+    "searchContentProducts" : ".content-products div[class*='products'] ol li.product-item",
+
+    "searchButtonMoreProducts" : "button[id='moreProductsBtn'][class*='btn-primary']",
+    "searchContentMoreProducts" : "ol.products.list.items.product-items li.item.product.product-item"
 }
