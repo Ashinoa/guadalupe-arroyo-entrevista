@@ -1,5 +1,6 @@
 import HomePage from "../support/pages/HomePage";
 describe('filtrar memoria', () => {
+    
     beforeEach(() => {
         cy.visit('/', { failOnStatusCode: false });
     })
@@ -10,9 +11,9 @@ describe('filtrar memoria', () => {
 
     })
 
-    context('macbook-11 resolution', () => {
+    context('ipad-2 resolution', () => {
         beforeEach(() => {
-            cy.viewport('macbook-11')
+            cy.viewport('ipad-2')
         })
         it('filtrar memoria y precio tipo string en viewport default', () => {
             HomePage.filterMemory('128');
