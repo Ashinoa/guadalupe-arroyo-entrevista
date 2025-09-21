@@ -1,3 +1,4 @@
+import ProductPage from './ProductPage';
 class HomePage {
 
     buttonSearch(element) {
@@ -16,8 +17,6 @@ class HomePage {
 
             cy.get('body').then(($body) => {
                 if ($body.find(locators.filterItemsContract).is(':hidden') && $body.find(locators.expandFilter).is(':visible')) {
-                    console.log("filter Items:", locators.filterItemsContract);
-                    console.log("strong visible: ", locators.expandFilter);
                     cy.get(locators.expandFilter).should('be.visible').click();
                     cy.get(locators.searchMemoryFilterContract).should('be.visible').click();
                     cy.get(locators.searchExpandMemoryList).should('be.visible').contains(valueMemory).click();
@@ -39,8 +38,7 @@ class HomePage {
         cy.fixture('dataCP002.json').then((locators) => {
             cy.get('body').then(($body) => {
                 if ($body.find(locators.filterItemsContract).is(':hidden') && $body.find(locators.expandFilter).is(':visible')) {
-                    console.log("filter Items:", locators.filterItemsContract);
-                    console.log("strong visible: ", locators.expandFilter);
+
                     cy.get(locators.expandFilter).should('be.visible').click();
                     cy.get(locators.searchPriceFilterContract).closest(locators.searchParentFilterPrice).find(locators.searchTitleFilterPrice).should('be.visible').click();
 
@@ -83,30 +81,46 @@ class HomePage {
         return match ? match[0] : null;
     }
 
+
     countProducts() {
         cy.fixture('dataCP002.json').then((locators) => {
+            cy.get(locators.searchContentProducts).should('have.length.greaterThan', 0).then(($list) => {
+                const count = $list.length;
 
-            cy.get('body').then(($body) => {
-                if ($body.find(locators.searchButtonMoreProducts).is(':enabled')) {
-                    cy.get(locators.searchButtonMoreProducts).should('be.enabled').click();
-                    
-                    cy.get(locators.searchContentMoreProducts).should('exist').its('length').then((count) => {
+                if (count < 12) {
+                    // Caso: menos de 12 equipos
+                    cy.get(locators.searchTotalProducts).should('be.visible').invoke('text').then((text) => {
+                        const totalProducts = parseInt(this.#searchNumberInString(text), 10);
+                        expect(totalProducts).to.eq(count);
                         cy.log(`Se encontraron ${count} equipos`);
-                        expect(count).to.be.within(0,count);
-                        return;
-                    })
-                }else{
-                    cy.get(locators.searchContentProducts).should('exist').its('length').then((count) => {
-                        cy.log(`Se encontraron ${count} equipos`);
-                        expect(count).to.be.within(0,count);
-                        return;
-                    })
+                    });
+
+                } else if (count === 12) {
+                    // Caso: hay 12 equipos 
+                    cy.get(locators.searchButtonMoreProducts).then(($btn) => {
+                        if ($btn.is(':disabled') && $btn.is(':visible')) {
+                            cy.get(locators.searchTotalProducts).should('be.visible').invoke('text').then((text) => {
+                                const totalProducts = parseInt(this.#searchNumberInString(text), 10);
+                                expect(totalProducts).to.eq(count);
+                                cy.log(`Se encontraron ${count} equipos`);
+                            });
+
+                        } else if ($btn.is(':enabled') && $btn.is(':visible')) {
+                            cy.wrap($btn).click();
+                        }
+                    });
                 }
-            })
+            });
 
-
+            // chequeo en qué página estoy (solo ruta, no origin)
+            cy.location("pathname").then((pathState) => {
+                if (pathState !== "/") {
+                    ProductPage.countMoreProducts();
+                }
+            });
         });
     }
+
 }
 
 export default new HomePage();

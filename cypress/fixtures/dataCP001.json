@@ -1,4 +1,7 @@
  { 
     "searchButton":"#search_action",
-    "searchInput" : "input[id='search']"
+    "searchInput" : "input[id='search']",
+    "searchText" :".price-content ",
+    "searchList" : "ol[class='products list items product-items'] li"
+
 }

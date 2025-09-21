@@ -12,7 +12,14 @@
     "searchExpandPriceList" : "ol[data-code='price'] li",
 
     "searchContentProducts" : ".content-products div[class*='products'] ol li.product-item",
+    "searchTotalProducts" : "div[class*='total-products'] p",
 
-    "searchButtonMoreProducts" : "button[id='moreProductsBtn'][class*='btn-primary']",
-    "searchContentMoreProducts" : "ol.products.list.items.product-items li.item.product.product-item"
+    "searchButtonMoreProducts" : "button[id='moreProductsBtn'][data-cat='smartphones']",
+
+    "searchListMoreProducts" : "ol.products.list.items.product-items li",
+    "searchTotalMoreProducts": "#toolbar-amount span"
+    
+   
+  
+
 }
