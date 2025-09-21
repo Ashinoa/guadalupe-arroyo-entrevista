@@ -1,0 +1,12 @@
+{
+    "searchProducts" : ".products ol li.product-item",
+    "paymentMethods" : "#open-installments-modal",
+
+    "searchSelectEntity":"#bankSelector input[id='inputbank']",
+    "searchBank" : "ul[id='ui-id-2'] li div",
+
+    "searchSelectCard":"#cardSelector input[id='inputCard']",
+    "searchCard" : "#selectCardByBank ul li span",
+    
+    "searchListInstallment" : "#body-installments-table tr td span.blue"
+}

@@ -1,4 +1,5 @@
 import ProductPage from './ProductPage';
+import ResultSearchPage from './ResultSearchPage';
 class HomePage {
 
     buttonSearch(element) {
@@ -112,14 +113,21 @@ class HomePage {
                 }
             });
 
-            // chequeo en qué página estoy (solo ruta, no origin)
+            // chequeo en qué página estoy 
             cy.location("pathname").then((pathState) => {
                 if (pathState !== "/") {
-                    ProductPage.countMoreProducts();
+                    ResultSearchPage.countMoreProducts();
                 }
             });
         });
     }
+
+    searchThirdProduct() {
+        cy.fixture('dataCP003.json').then((locators) => {
+            cy.get(locators.searchProducts).eq(2).find("a").first().click();
+        });
+    }
+
 
 }
 

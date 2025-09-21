@@ -6,31 +6,29 @@ class ProductPage {
         });
     }
 
-    #searchNumberInString(text) {
-        const match = text.match(/\d+/);
-        return match ? match[0] : null;
+    selectIncorrectPaymentMethods(entity, card, installments) {
+        cy.fixture('dataCP003.json').then((locators) => {
+            cy.get(locators.paymentMethods).should('be.visible').click();
+            cy.get(locators.searchSelectEntity).should('be.visible').click();
+            cy.get(locators.searchBank).should('be.visible').contains(entity).click();
+            cy.get(locators.searchSelectCard).should('be.visible').click();
+            cy.get(locators.searchCard).should('be.visible').contains(card).click();
+
+            cy.get(locators.searchListInstallment).should('be.visible').should('not.contain.text', installments);
+            
+        });
     }
 
-    countMoreProducts() {
-        cy.fixture('dataCP002.json').then((locators) => {
+    selectCorrectPaymentMethods(entity, card, installments) {
+        cy.fixture('dataCP003.json').then((locators) => {
+            cy.get(locators.paymentMethods).should('be.visible').click();
+            cy.get(locators.searchSelectEntity).should('be.visible').click();
+            cy.get(locators.searchBank).should('be.visible').contains(entity).click();
+            cy.get(locators.searchSelectCard).should('be.visible').click();
+            cy.get(locators.searchCard).should('be.visible').contains(card).click();
 
-
-            cy.get(locators.searchTotalMoreProducts).eq(1).invoke('text').then((text) => {// eq(1) --> agarro el segundo span que tiene el numero total
-                const totalProducts = parseInt(this.#searchNumberInString(text), 10);
-                cy.get(locators.searchListMoreProducts).should('have.length.greaterThan', 0).then(($list) => {
-                    const count = $list.length;
-                    if (totalProducts === count) {
-                        expect(totalProducts).to.eq(count);
-                        cy.log(`Se encontraron ${count} equipos`);
-                    } else if (totalProducts > count) {
-                        expect(totalProducts).to.be.greaterThan(count);
-                        cy.log(`Se encontraron ${count} equipos`);
-                    } else {
-                        expect(count).to.be.greaterThan(totalProducts);
-                        cy.log(`Se encontraron ${count} equipos`);
-                    }
-                });
-            });
+            cy.get(locators.searchListInstallment).should('be.visible').should('contain', installments);
+            
         });
     }
 
