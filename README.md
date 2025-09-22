@@ -85,3 +85,32 @@ Algunos de los puntos que serán tenidos en cuenta en la resolución de los caso
   [Referencia Page Object en Cypress](https://www.toolsqa.com/cypress/page-object-pattern-in-cypress/)
 
 ---
+
+# Experiencia trabajando con Cypress  
+
+Durante el desarrollo de pruebas automatizadas con **Cypress**, tuve la oportunidad de trabajar en diferentes escenarios relacionados con la tienda online de Movistar. En este proceso me encontré con varios obstaculos que me permitieron profundizar en el framework y adquirir mejores prácticas de automatización.  
+
+---
+
+## Dificultades encontradas  
+- **Manejo de localizadores dinámicos**: en varias ocasiones los elementos de la página cambiaban según el estado (habilitado, deshabilitado, visible, oculto). Al principio esto generaba errores porque Cypress no encontraba el selector esperado.
+- **Uso de métodos de Cypress**: al inicio me resultaba confuso cuándo utilizar `should`, `invoke`, `is` o `contains`, lo que llevaba a pruebas inestables o que siempre devolvían true.  
+- **Manejo de navegación entre páginas**: fue necesario validar correctamente el `pathname` y el estado del `body` para confirmar en qué pantalla se encontraba la prueba.  
+
+---
+
+## Cómo solucioné los problemas    
+- Utilizando comandos como `cy.get('body').then(...)` para validar elementos de manera condicional.  
+- Implementando funciones auxiliares privadas dentro de las clases (por ejemplo, para extraer números de strings con `match`).  
+- Combinando assertions (`should`, `expect`) con métodos de Cypress (`invoke`, `is`) para tener validaciones más confiables.  
+- Consultando la [documentación oficial de Cypress](https://docs.cypress.io/) y probando diferentes alternativas hasta dar con la más estable.  
+
+---
+
+## Aprendizajes obtenidos  
+- Comprendí la importancia de **elegir buenos localizadores** y trabajar con ellos de manera flexible.  
+- Aprendí a usar correctamente los distintos métodos de Cypress (`should`, `invoke`, `contains`, etc.), entendiendo sus diferencias.  
+- Practiqué cómo diseñar **casos de prueba claros** con descripción, parámetros y resultados esperados.  
+
+---
+
