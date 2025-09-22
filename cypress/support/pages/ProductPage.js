@@ -15,7 +15,7 @@ class ProductPage {
             cy.get(locators.searchCard).should('be.visible').contains(card).click();
 
             cy.get(locators.searchListInstallment).should('be.visible').should('not.contain.text', installments);
-            
+
         });
     }
 
@@ -28,9 +28,55 @@ class ProductPage {
             cy.get(locators.searchCard).should('be.visible').contains(card).click();
 
             cy.get(locators.searchListInstallment).should('be.visible').should('contain', installments);
-            
+
         });
     }
+
+    backHomePage() {
+        cy.fixture('dataCP004.json').then((locators) => {
+            cy.get(locators.backHomePage).should('be.visible').click();
+        })
+    }
+
+    addProductInCart() {
+        cy.fixture('dataCP004.json').then((locators) => {
+            cy.get(locators.titleProduct).should('be.visible').invoke('text').as('nameProduct');
+            cy.get(locators.brandProduct).should('be.visible').invoke('text').as('brandProduct');
+            cy.get(locators.priceProduct).should('be.visible').invoke('text').as('priceProduct');
+
+            cy.get('@nameProduct').then((titleProduct) => {
+                cy.screenshot(titleProduct + '-before-add-cart');
+            });
+
+            cy.get(locators.addCart).should('be.visible').click();
+
+            cy.get(locators.conterProductsCart).invoke('text').then((count) => {
+                const items = parseInt(count.trim(), 10);
+
+                cy.get(locators.firstLinkCart).should('be.visible').click();
+                if (items > 0) {
+                    cy.get(locators.secondaryLinkCart).should('be.visible').click();
+                }
+            });
+
+            cy.get('@nameProduct').then((titleProduct) => {
+                cy.get(locators.cartProductTitle).should('contain.text', titleProduct);
+                cy.screenshot(titleProduct + '-after-validation-cart');
+            });
+
+            cy.get('@brandProduct').then((brandProduct) => {
+                cy.get(locators.cartProductBrand).should('contain.text', brandProduct);
+            });
+
+            cy.get('@priceProduct').then((priceProduct) => {
+                cy.get(locators.cartProductPrice).should('contain.text', priceProduct);
+            });
+
+
+        });
+    }
+
+
 
 }
 export default new ProductPage();

@@ -1,4 +1,3 @@
-import ProductPage from './ProductPage';
 import ResultSearchPage from './ResultSearchPage';
 class HomePage {
 
@@ -30,6 +29,22 @@ class HomePage {
         });
     }
 
+    #searchFilterPriceContract(locators) {
+        cy.get(locators.searchPriceFilterContract).closest(locators.searchParentFilterPrice).find(locators.searchTitleFilterPrice).should('be.visible').click();
+
+        cy.get(locators.searchExpandPriceList).each(($li) => {
+            const text = $li.text().replace(/[^\d\-]/g, '');
+            const parts = text.split('-');
+            const liMin = parseInt(parts[0], 10);
+            const liMax = parseInt(parts[1], 10);
+
+            if (liMin <= parseMin && liMax >= parseMax) {
+                cy.wrap($li).should('be.visible').click();
+                return false;
+            }
+        });
+    }
+
     filterPrice(min, max) {
         if (!min && !max) return;
 
@@ -39,41 +54,13 @@ class HomePage {
         cy.fixture('dataCP002.json').then((locators) => {
             cy.get('body').then(($body) => {
                 if ($body.find(locators.filterItemsContract).is(':hidden') && $body.find(locators.expandFilter).is(':visible')) {
-
                     cy.get(locators.expandFilter).should('be.visible').click();
-                    cy.get(locators.searchPriceFilterContract).closest(locators.searchParentFilterPrice).find(locators.searchTitleFilterPrice).should('be.visible').click();
+                    this.#searchFilterPriceContract(locators);
 
-                    cy.get(locators.searchExpandPriceList).each(($li) => {
-                        const text = $li.text().replace(/[^\d\-]/g, '');
-                        const parts = text.split('-');
-                        const liMin = parseInt(parts[0], 10);
-                        const liMax = parseInt(parts[1], 10);
-
-                        if (liMin <= parseMin && liMax >= parseMax) {
-                            cy.wrap($li).should('be.visible').click();
-                            return false; // Cortamos el bucle .each()
-                        }
-                    });
                 } else {
-                    cy.get(locators.searchPriceFilterContract).closest(locators.searchParentFilterPrice).find(locators.searchTitleFilterPrice).should('be.visible').click();
-
-                    cy.get(locators.searchExpandPriceList).each(($li) => {
-                        const text = $li.text().replace(/[^\d\-]/g, '');
-                        const parts = text.split('-');
-                        const liMin = parseInt(parts[0], 10);
-                        const liMax = parseInt(parts[1], 10);
-
-                        if (liMin <= parseMin && liMax >= parseMax) {
-                            cy.wrap($li).should('be.visible').click();
-                            return false; // Cortamos el bucle .each()
-                        }
-                    });
-
+                    this.#searchFilterPriceContract(locators);
                 }
-
             });
-
-
         });
     }
 
@@ -89,7 +76,7 @@ class HomePage {
                 const count = $list.length;
 
                 if (count < 12) {
-                    // Caso: menos de 12 equipos
+                    // cuenta menos de 12 equipos
                     cy.get(locators.searchTotalProducts).should('be.visible').invoke('text').then((text) => {
                         const totalProducts = parseInt(this.#searchNumberInString(text), 10);
                         expect(totalProducts).to.eq(count);
@@ -97,7 +84,7 @@ class HomePage {
                     });
 
                 } else if (count === 12) {
-                    // Caso: hay 12 equipos 
+                    // cuenta 12 equipos 
                     cy.get(locators.searchButtonMoreProducts).then(($btn) => {
                         if ($btn.is(':disabled') && $btn.is(':visible')) {
                             cy.get(locators.searchTotalProducts).should('be.visible').invoke('text').then((text) => {
@@ -113,12 +100,12 @@ class HomePage {
                 }
             });
 
-            // chequeo en qué página estoy 
-            cy.location("pathname").then((pathState) => {
-                if (pathState !== "/") {
+            cy.url().then((url) => {
+                if (url.includes('/smartphones')) {
                     ResultSearchPage.countMoreProducts();
                 }
             });
+
         });
     }
 
@@ -128,6 +115,12 @@ class HomePage {
         });
     }
 
+    searchProductByIndex(product){
+        cy.fixture('dataCP004.json').then((locators) => {
+            expect(product).to.be.within(0, 12);
+            cy.get(locators.searchProducts).eq(product).find("a").first().click();
+        });
+    }
 
 }
 

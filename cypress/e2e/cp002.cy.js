@@ -1,18 +1,18 @@
 import HomePage from "../support/pages/HomePage";
-describe('filtrar por memoria y precio y contar la cantidad', () => {
+describe('Aplicar filtro de equipos', () => {
 
     beforeEach(() => {
         cy.visit('/', { failOnStatusCode: false });
     })
 
-    it('filtrar memoria tipo number y precio con distintos tipos de datos', () => {
+    it('Filtrar memoria tipo number y precio con distintos tipos de datos', () => {
         HomePage.filterMemory(128);
         HomePage.filterPrice("200000", 300.000);
         HomePage.countProducts(); 
 
     })
 
-    it('contar mas productos', () => {
+    it('Mostrar mas productos', () => {
         HomePage.filterPrice(200.000, "$300.000");
         HomePage.countProducts(); 
 
@@ -22,7 +22,7 @@ describe('filtrar por memoria y precio y contar la cantidad', () => {
         beforeEach(() => {
             cy.viewport('ipad-2');
         })
-        it('filtrar memoria tipo string y precio con distintos tipos de datos', () => {
+        it('Filtrar memoria tipo string y precio con distintos tipos de datos responsive', () => {
             HomePage.filterMemory('128GB');
             HomePage.filterPrice(200.000, "$300.000");
             HomePage.countProducts();

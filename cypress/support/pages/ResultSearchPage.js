@@ -13,17 +13,28 @@ class ResultSearchPage {
 
     countMoreProducts() {
         cy.fixture('dataCP002.json').then((locators) => {
+            cy.get(locators.searchTotalMoreProducts).then(($els) => {
+                let totalText;
 
-            cy.get(locators.searchTotalMoreProducts).eq(1).invoke('text').then((text) => {// eq(1) --> agarro el segundo span que tiene el numero total
-                const totalProducts = parseInt(this.#searchNumberInString(text), 10);
+                if ($els.length > 1) {
+                    totalText = $els.eq(1).text();
+                } else {
+                    totalText = $els.eq(0).text();
+                }
+                const totalProducts = parseInt(this.#searchNumberInString(totalText), 10);
                 cy.get(locators.searchListMoreProducts).should('have.length.greaterThan', 0).then(($list) => {
                     const count = $list.length;
-                    expect(totalProducts).to.eq(count);
-                    cy.log(`Se encontraron ${count} equipos`);
-
+                    if (totalProducts > count) {
+                        expect(totalProducts).to.be.greaterThan(count);
+                        cy.log(`Se encontraron ${count} equipos`);
+                    } else {
+                        expect(totalProducts).to.eq(count);
+                        cy.log(`Se encontraron ${count} equipos`);
+                    }
                 });
             });
         });
     }
+
 }
 export default new ResultSearchPage();

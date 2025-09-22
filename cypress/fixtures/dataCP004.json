@@ -1,0 +1,22 @@
+{
+    "searchProducts" : ".products ol li.product-item",
+    "addCart": "#swatch_attribute_card",
+
+    "firstLinkCart": "div.minicart-wrapper a",
+
+    "conterProductsCart" : "span.counter-number",
+
+    "secondaryLinkCart" : "div.secondary a.action.viewcart",
+
+    "titleProduct" : "h1.page-title span[data-ui-id='page-title-wrapper']",
+    "brandProduct" : "h1.page-title span.brand",
+    "priceProduct": "span[id*='product-price'] span.price", 
+
+    "cartProductBrand": "strong.product-item-name a.product-manufacturer",
+    "cartProductTitle" : "strong.product-item-name a.product-model",
+    "cartProductPrice": ".cart-price span.price",
+
+    "backHomePage" : "div.header.content a.logo img"
+    
+   
+}
